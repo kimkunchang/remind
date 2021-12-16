@@ -1,6 +1,8 @@
 package com.example.remind.presentation
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,5 +40,9 @@ class RemindMainFragment: Fragment() {
         binding.layoutBtnRemindAdd.setOnClickListener {
             it.findNavController().navigate(R.id.action_remind_setting_fragment)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 }

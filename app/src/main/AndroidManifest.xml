@@ -11,12 +11,17 @@
         android:theme="@style/Theme.Remind">
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleInstance"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".presentation.RemindNotificationActivity"
+            android:exported="true">
         </activity>
     </application>
 

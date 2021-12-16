@@ -8,4 +8,5 @@
     <string name="string_sub_title_ringtone">벨소리</string>
     <string name="string_ringtone">Ringtone</string>
     <string name="string_bottom_save_button">Save</string>
+    <string name="string_bottom_dismiss">Dismiss</string>
 </resources>

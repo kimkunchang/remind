@@ -2,6 +2,7 @@ package com.example.remind
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -19,5 +20,9 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.remind_main_activity)
 
         navController = Navigation.findNavController(this, R.id.main_container)
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 }

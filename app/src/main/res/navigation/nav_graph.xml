@@ -17,13 +17,11 @@
 
     </fragment>
 
-
     <fragment
         android:id="@+id/remindSettingFragment"
         android:name="com.example.remind.presentation.RemindSettingFragment"
         android:label="remindSettingFragment"
         tools:layout="@layout/remind_setting_fragment">
-
     </fragment>
 
 </navigation>
