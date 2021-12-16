@@ -16,10 +16,6 @@ import com.example.remind.databinding.RemindMainFragmentBinding
 
 class RemindMainFragment: Fragment() {
 
-    companion object {
-        fun newInstance() = RemindMainFragment()
-    }
-
     //private lateinit var viewModel: MainViewModel
 
     private lateinit var binding: RemindMainFragmentBinding
