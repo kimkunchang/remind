@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">remind</string>
+    <string name="app_name">Remind</string>
+    <string name="string_title_remind_main">리마인드</string>
+    <string name="string_title_remind_setting">리마인드 설정</string>
 </resources>
