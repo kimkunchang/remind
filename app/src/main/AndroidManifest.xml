@@ -23,6 +23,11 @@
             android:name=".presentation.RemindNotificationActivity"
             android:exported="true">
         </activity>
+
+        <receiver android:name=".utils.RemindAlarmReceiver"
+            android:exported="false">
+
+        </receiver>
     </application>
 
 </manifest>

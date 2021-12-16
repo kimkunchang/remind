@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="data"
+            type="com.example.remind.model.RemindNotificationData" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,6 +23,7 @@
             android:textColor="@color/white"
             android:textSize="25dp"
             android:textStyle="bold"
+            android:text="@{data.remindTitle}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,13 +33,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
-            android:text="08:00"
             android:textColor="@color/white"
+            android:text="@{@string/string_time_format(data.remindTimeHour, data.remindTimeMinute)}"
             android:textSize="120dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_notification_remind_name" />
+            app:layout_constraintTop_toBottomOf="@id/tv_notification_remind_name"
+            tools:text="08:00"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_remind_complete"

@@ -189,6 +189,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_remind_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_remind_save_button"
