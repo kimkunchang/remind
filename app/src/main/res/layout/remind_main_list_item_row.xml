@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/list_row_margin_start_end"
-    android:layout_marginLeft="@dimen/list_row_margin_start_end"
+    android:layout_marginStart="@dimen/margin_start_8dp"
+    android:layout_marginLeft="@dimen/margin_start_8dp"
     android:layout_marginTop="6dp"
-    android:layout_marginEnd="@dimen/list_row_margin_start_end"
-    android:layout_marginRight="@dimen/list_row_margin_start_end"
+    android:layout_marginEnd="@dimen/margin_start_8dp"
+    android:layout_marginRight="@dimen/margin_start_8dp"
     android:background="@drawable/bg_list_row_root">
 
     <androidx.appcompat.widget.AppCompatImageView

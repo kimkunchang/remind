@@ -2,4 +2,10 @@
     <string name="app_name">Remind</string>
     <string name="string_title_remind_main">리마인드</string>
     <string name="string_title_remind_setting">리마인드 설정</string>
+    <string name="string_sub_title_remind_name">리마인드 이름</string>
+    <string name="string_edit_hint_remind_name">Please enter a name</string>
+    <string name="string_sub_title_time_setting">시간 설정</string>
+    <string name="string_sub_title_ringtone">벨소리</string>
+    <string name="string_ringtone">Ringtone</string>
+    <string name="string_bottom_save_button">Save</string>
 </resources>

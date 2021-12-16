@@ -4,9 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/dev/remind/app/src/main/res/drawable/bg_remind_add_button.xml" value="0.2713541666666667" />
+        <entry key="..\:/dev/remind/app/src/main/res/drawable/bg_remind_save_button.xml" value="0.4630208333333333" />
         <entry key="..\:/dev/remind/app/src/main/res/drawable/ic_add.xml" value="0.2713541666666667" />
         <entry key="..\:/dev/remind/app/src/main/res/drawable/ic_add_24.xml" value="0.2713541666666667" />
         <entry key="..\:/dev/remind/app/src/main/res/drawable/ic_alarm_24.xml" value="0.2713541666666667" />
+        <entry key="..\:/dev/remind/app/src/main/res/drawable/ic_navigate_next.xml" value="0.4630208333333333" />
         <entry key="..\:/dev/remind/app/src/main/res/drawable/list_row_root_background_color.xml" value="0.2713541666666667" />
         <entry key="..\:/dev/remind/app/src/main/res/drawable/selector_check_box.xml" value="0.2713541666666667" />
         <entry key="..\:/dev/remind/app/src/main/res/layout/main_activity.xml" value="0.44635416666666666" />
@@ -14,7 +16,8 @@
         <entry key="..\:/dev/remind/app/src/main/res/layout/main_remind_list_row.xml" value="0.4" />
         <entry key="..\:/dev/remind/app/src/main/res/layout/remind_main_activity.xml" value="0.2552083333333333" />
         <entry key="..\:/dev/remind/app/src/main/res/layout/remind_main_fragment.xml" value="0.47804878048780486" />
-        <entry key="..\:/dev/remind/app/src/main/res/layout/remind_setting_fragment.xml" value="0.446875" />
+        <entry key="..\:/dev/remind/app/src/main/res/layout/remind_main_list_item_row.xml" value="0.24791666666666667" />
+        <entry key="..\:/dev/remind/app/src/main/res/layout/remind_setting_fragment.xml" value="0.264" />
       </map>
     </option>
   </component>

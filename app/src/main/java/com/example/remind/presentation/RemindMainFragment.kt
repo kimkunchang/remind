@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.remind.R
+import com.example.remind.databinding.RemindMainFragmentBinding
 
 class RemindMainFragment: Fragment() {
 
@@ -18,22 +20,23 @@ class RemindMainFragment: Fragment() {
 
     //private lateinit var viewModel: MainViewModel
 
+    private lateinit var binding: RemindMainFragmentBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.remind_main_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.remind_main_fragment, container, false)
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-        view.findViewById<ConstraintLayout>(R.id.layout_btn_remind_add).setOnClickListener {
+        binding.layoutBtnRemindAdd.setOnClickListener {
             it.findNavController().navigate(R.id.action_remind_setting_fragment)
         }
-
-
-
     }
 }
