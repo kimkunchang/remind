@@ -13,6 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.remind.R
 import com.example.remind.databinding.RemindMainFragmentBinding
+import com.example.remind.model.dao.RemindInfoDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class RemindMainFragment: Fragment() {
 
@@ -40,5 +44,14 @@ class RemindMainFragment: Fragment() {
 
     override fun onResume() {
         super.onResume()
+
+        // todo 해당 리마인드 리스트 data를 RecyclerView 와 DataBinding 기능 구현
+
+        CoroutineScope(Dispatchers.IO).launch {
+            context?.let {
+                val output = RemindInfoDatabase.getInstance(it).remindInfoDao().getRemindInfoList()
+                Log.w("KKC_TAG", "output : $output")
+            }
+        }
     }
 }

@@ -6,7 +6,9 @@ import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.room.Room
 import com.example.remind.databinding.RemindMainActivityBinding
+import com.example.remind.model.dao.RemindInfoDatabase
 
 class MainActivity : AppCompatActivity() {
 
