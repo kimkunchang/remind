@@ -71,24 +71,22 @@ class RemindSettingFragment: Fragment() {
                             alarmOnOffStatus = true
                         )
                     )
+                    val entityList = RemindInfoDatabase.getInstance(it).remindInfoDao().getRemindInfoList()
+
+                    var alarmID = if(entityList.isEmpty()){
+                        1
+                    } else {
+                        val recentEntity = entityList[entityList.size -1]
+                        recentEntity.id
+                    }
+
+                    registerAlarm(alarmID, binding.etRemindName.text.toString(), binding.tpAlarmTime.hour, binding.tpAlarmTime.minute)
                 }
             }
-            getRecentEntity { alarmId ->
-                registerAlarm(alarmId, binding.etRemindName.text.toString(), binding.tpAlarmTime.hour, binding.tpAlarmTime.minute)
-            }
-
-
-            this@RemindSettingFragment.findNavController().popBackStack()
-        }
-    }
-
-    private fun getRecentEntity(callback: (alarmID: Int) -> Unit){
-        CoroutineScope(Dispatchers.IO).launch {
             context?.let {
-                val entityList = RemindInfoDatabase.getInstance(it).remindInfoDao().getRemindInfoList()
-                val recentEntity = entityList[entityList.size -1]
-                callback(recentEntity.id)
+                Toast.makeText(it, getString(R.string.string_remind_alarm_register), Toast.LENGTH_SHORT).show()
             }
+            this@RemindSettingFragment.findNavController().popBackStack()
         }
     }
 
@@ -120,12 +118,6 @@ class RemindSettingFragment: Fragment() {
 
         val alarmManager = requireActivity().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         alarmManager.setAlarmClock(AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent), pendingIntent)
-
-        Handler(Looper.getMainLooper()).post {
-            context?.let {
-                Toast.makeText(it, getString(R.string.string_remind_alarm_register), Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     private fun getCurrentRingtoneTitle(): String{
