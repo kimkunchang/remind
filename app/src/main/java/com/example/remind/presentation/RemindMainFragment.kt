@@ -1,27 +1,22 @@
 package com.example.remind.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.remind.R
 import com.example.remind.databinding.RemindMainFragmentBinding
-import com.example.remind.model.dao.RemindInfoDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.remind.model.MainViewModel
 
 class RemindMainFragment: Fragment() {
 
-    //private lateinit var viewModel: MainViewModel
-
+    private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: RemindMainFragmentBinding
 
     override fun onCreateView(
@@ -30,28 +25,33 @@ class RemindMainFragment: Fragment() {
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.remind_main_fragment, container, false)
 
+        activity?.let {
+            binding.viewModel = viewModel
+            binding.lifecycleOwner = this
+        }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+
+        val remindAdapter = RemindListAdapter(requireContext())
+
+        binding.rvRemindList.apply {
+            adapter = remindAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
+        viewModel.remindList.observe(viewLifecycleOwner, { remindList ->
+            remindList?.let {
+                remindAdapter.setRemindList(it)
+                Log.w("KKC_TAG", "output : $it")
+            }
+        })
 
         binding.layoutBtnRemindAdd.setOnClickListener {
             it.findNavController().navigate(R.id.action_remind_setting_fragment)
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        // todo 해당 리마인드 리스트 data를 RecyclerView 와 DataBinding 기능 구현
-
-        CoroutineScope(Dispatchers.IO).launch {
-            context?.let {
-                val output = RemindInfoDatabase.getInstance(it).remindInfoDao().getRemindInfoList()
-                Log.w("KKC_TAG", "output : $output")
-            }
         }
     }
 }

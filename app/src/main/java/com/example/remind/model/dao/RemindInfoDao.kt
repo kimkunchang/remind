@@ -1,5 +1,6 @@
 package com.example.remind.model.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -11,10 +12,10 @@ import com.example.remind.model.entity.RemindInfoEntity
 interface RemindInfoDao {
 
     @Insert
-    suspend fun saveRemindInfo(remindInfo: RemindInfoEntity)
+    fun saveRemindInfo(remindInfo: RemindInfoEntity)
 
     @Query("SELECT * FROM remind_entity")
-    suspend fun getRemindInfoList(): MutableList<RemindInfoEntity>
+    fun getRemindInfoList(): LiveData<List<RemindInfoEntity>>
 
     @Query("SELECT * FROM remind_entity WHERE remindTimeHour =:remindName")
     suspend fun getRemindInfo(remindName: String): RemindInfoEntity
