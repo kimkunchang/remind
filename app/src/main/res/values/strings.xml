@@ -13,4 +13,7 @@
     <string name="string_remind_name_empty">리마인드 이름을 입력해주세요.</string>
 
     <string name="string_remind_alarm_register">알람이 등록되었습니다.</string>
+    <string name="string_remind_channel_name">리마인드 채널</string>
+    <string name="string_remind_notification_name">리마인드 알림</string>
+
 </resources>

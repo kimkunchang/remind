@@ -1,11 +1,10 @@
-package com.example.remind.presentation
+package com.example.remind.presentation.notification
 
 import android.content.Intent
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -45,14 +44,10 @@ class RemindNotificationActivity: AppCompatActivity() {
             binding.entity = entity
         }
 
-        binding.btnRemindComplete.setOnClickListener {
-            completeRemindAlarm()
-        }
+        binding.btnRemindComplete.setOnClickListener { completeRemindAlarm() }
     }
 
     private fun completeRemindAlarm(){
-        Log.w("KKC_TAG", "completeRemindAlarm -> alarmID : $alarmID")
-
         viewModel.getRemindInfo(alarmID) { entity ->
             entity.cancelAlarm(this@RemindNotificationActivity)
             viewModel.updateRemindInfo(entity)
@@ -71,15 +66,6 @@ class RemindNotificationActivity: AppCompatActivity() {
         releaseRingTone()
     }
 
-    private fun releaseRingTone(){
-        ringTone?.let{
-            if(it.isPlaying){
-                it.stop()
-            }
-        }
-        ringTone = null
-    }
-
     private fun playRingTone(){
         releaseRingTone()
         try {
@@ -91,4 +77,12 @@ class RemindNotificationActivity: AppCompatActivity() {
         }
     }
 
+    private fun releaseRingTone(){
+        ringTone?.let{
+            if(it.isPlaying){
+                it.stop()
+            }
+        }
+        ringTone = null
+    }
 }

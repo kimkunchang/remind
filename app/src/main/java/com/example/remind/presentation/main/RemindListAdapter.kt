@@ -1,4 +1,4 @@
-package com.example.remind.presentation
+package com.example.remind.presentation.main
 
 import android.view.LayoutInflater
 import android.view.View

@@ -3,6 +3,7 @@
     package="com.example.remind">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -22,14 +23,16 @@
         </activity>
 
         <activity
-            android:name=".presentation.RemindNotificationActivity"
+            android:name=".presentation.notification.RemindNotificationActivity"
             android:exported="true">
         </activity>
 
-        <receiver android:name=".utils.RemindAlarmReceiver"
+        <receiver android:name=".service.RemindAlarmReceiver"
             android:exported="false">
 
         </receiver>
+
+        <service android:name=".service.RemindAlarmService"/>
     </application>
 
 </manifest>

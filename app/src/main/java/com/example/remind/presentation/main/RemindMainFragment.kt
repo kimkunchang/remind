@@ -1,7 +1,6 @@
-package com.example.remind.presentation
+package com.example.remind.presentation.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,10 +36,7 @@ class RemindMainFragment: Fragment(), OnStatusRemindListener {
         remindAdapter.setOnStatusRemindListener(this)
 
         viewModel.remindList.observe(viewLifecycleOwner, { remindList ->
-            remindList?.let {
-                remindAdapter.setRemindList(it)
-                Log.w("KKC_TAG", "output : $it")
-            }
+            remindList?.let { remindAdapter.setRemindList(it) }
         })
 
         return binding.root
@@ -60,7 +56,6 @@ class RemindMainFragment: Fragment(), OnStatusRemindListener {
     }
 
     override fun onStatusChange(remindInfo: RemindInfoEntity) {
-        Log.w("KKC_TAG", "onStatusChange -> remindInfo.alarmOnOffStatus : ${remindInfo.alarmOnOffStatus}")
         if(remindInfo.alarmOnOffStatus){
             remindInfo.cancelAlarm(requireContext())
             viewModel.updateRemindInfo(remindInfo)

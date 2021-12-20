@@ -21,13 +21,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        binding = DataBindingUtil.setContentView(this, R.layout.remind_main_activity)
+
         if(!checkOverlayPermission(this)){
             val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName"))
             startActivityForResult(intent, 1111)
             return
         }
-
-        binding = DataBindingUtil.setContentView(this, R.layout.remind_main_activity)
 
         navController = Navigation.findNavController(this, R.id.main_container)
     }
@@ -39,4 +39,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
     }
+
+
 }

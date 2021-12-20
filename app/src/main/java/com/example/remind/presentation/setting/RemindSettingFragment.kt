@@ -1,11 +1,10 @@
-package com.example.remind.presentation
+package com.example.remind.presentation.setting
 
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,7 +37,6 @@ class RemindSettingFragment: Fragment() {
         alarmID = sageArgs.remindAlarmId
         currentRingtoneUri = RingtoneManager.getActualDefaultRingtoneUri(activity, RingtoneManager.TYPE_ALARM)
         currentRingtonePath = currentRingtoneUri.toString()
-        Log.w("KKC_TAG", "onCreate -> currentRingtonePath : $currentRingtonePath")
     }
 
     override fun onCreateView(
@@ -83,12 +81,6 @@ class RemindSettingFragment: Fragment() {
 
     private fun saveRemind(){
         if(verifyRemindInfo()){
-            var hour = binding.tpAlarmTime.hour
-
-            var minute = binding.tpAlarmTime.minute
-
-            Log.w("KKC_TAG", "hour : $hour, minute : $minute")
-
             var entity: RemindInfoEntity
 
             if(alarmID != 0){
@@ -141,10 +133,8 @@ class RemindSettingFragment: Fragment() {
         if(it.resultCode == RESULT_OK){
             val pickUri: Uri? = it.data?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
             pickUri?.let { pick ->
-                Log.w("KKC_TAG", "pickUri : $pick")
                 currentRingtoneUri = pick
                 currentRingtonePath = currentRingtoneUri.toString()
-                Log.w("KKC_TAG", "pickUri -> currentRingtonePath : $currentRingtonePath")
 
                 binding.tvRingtoneTitle.text = getCurrentRingtoneTitle(pick)
             }
