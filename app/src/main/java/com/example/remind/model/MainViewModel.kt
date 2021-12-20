@@ -20,7 +20,11 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         repository.saveRemindInfo(entity)
     }
 
-    fun getAllRemindList(): LiveData<List<RemindInfoEntity>> {
-        return remindList
+    fun updateRemindInfo(entity: RemindInfoEntity) = viewModelScope.launch(Dispatchers.IO) {
+        repository.updateRemindInfo(entity)
+    }
+
+    fun getRemindInfo(alarmID: Int, callback: (entity: RemindInfoEntity) -> Unit) = viewModelScope.launch(Dispatchers.IO){
+        callback(repository.getRemindInfo(alarmID))
     }
 }

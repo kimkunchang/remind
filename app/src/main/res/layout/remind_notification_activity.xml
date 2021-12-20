@@ -5,8 +5,12 @@
 
     <data>
         <variable
-            name="data"
-            type="com.example.remind.model.RemindNotificationData" />
+            name="entity"
+            type="com.example.remind.model.entity.RemindInfoEntity" />
+
+        <variable
+            name="viewModel"
+            type="com.example.remind.model.MainViewModel" />
 
     </data>
 
@@ -23,7 +27,7 @@
             android:textColor="@color/white"
             android:textSize="25dp"
             android:textStyle="bold"
-            android:text="@{data.remindTitle}"
+            android:text="@{entity.remindName}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:textColor="@color/white"
-            android:text="@{@string/string_time_format(data.remindTimeHour, data.remindTimeMinute)}"
+            android:text="@{entity.displayShorTime}"
             android:textSize="120dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"

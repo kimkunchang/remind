@@ -4,6 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="entity"
+            type="com.example.remind.model.entity.RemindInfoEntity" />
+
+        <variable
+            name="viewModel"
+            type="com.example.remind.model.MainViewModel" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
 
         android:layout_width="match_parent"
@@ -60,6 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:hint="@string/string_edit_hint_remind_name"
+                    android:text="@{entity.remindName}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_sub_title_remind_name" />
@@ -92,6 +104,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
                     android:timePickerMode="spinner"
+                    android:hour="@{entity.remindTimeHour}"
+                    android:minute="@{entity.remindTimeMinute}"
                     android:background="@drawable/bg_list_row_root"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

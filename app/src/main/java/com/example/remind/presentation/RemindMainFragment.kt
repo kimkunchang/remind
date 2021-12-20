@@ -13,11 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.remind.R
 import com.example.remind.databinding.RemindMainFragmentBinding
 import com.example.remind.model.MainViewModel
+import com.example.remind.model.entity.RemindInfoEntity
 
-class RemindMainFragment: Fragment() {
+class RemindMainFragment: Fragment(), OnStatusRemindListener {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: RemindMainFragmentBinding
+
+    private lateinit var remindAdapter: RemindListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,18 +33,8 @@ class RemindMainFragment: Fragment() {
             binding.lifecycleOwner = this
         }
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val remindAdapter = RemindListAdapter(requireContext())
-
-        binding.rvRemindList.apply {
-            adapter = remindAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-        }
+        remindAdapter = RemindListAdapter()
+        remindAdapter.setOnStatusRemindListener(this)
 
         viewModel.remindList.observe(viewLifecycleOwner, { remindList ->
             remindList?.let {
@@ -50,8 +43,30 @@ class RemindMainFragment: Fragment() {
             }
         })
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.rvRemindList.apply {
+            adapter = remindAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
         binding.layoutBtnRemindAdd.setOnClickListener {
             it.findNavController().navigate(R.id.action_remind_setting_fragment)
+        }
+    }
+
+    override fun onStatusChange(remindInfo: RemindInfoEntity) {
+        Log.w("KKC_TAG", "onStatusChange -> remindInfo.alarmOnOffStatus : ${remindInfo.alarmOnOffStatus}")
+        if(remindInfo.alarmOnOffStatus){
+            remindInfo.cancelAlarm(requireContext())
+            viewModel.updateRemindInfo(remindInfo)
+        } else {
+            remindInfo.registerAlarm(requireContext())
+            viewModel.updateRemindInfo(remindInfo)
         }
     }
 }

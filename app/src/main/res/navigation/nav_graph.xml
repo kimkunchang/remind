@@ -14,6 +14,7 @@
         <action
             android:id="@+id/action_remind_setting_fragment"
             app:destination="@id/remindSettingFragment"/>
+
     </fragment>
 
     <fragment
@@ -26,6 +27,10 @@
             android:id="@+id/action_remind_save_main_fragment"
             app:destination="@id/remindMainFragment"/>
 
+        <argument
+            android:name="remindAlarmId"
+            app:argType="integer"
+            android:defaultValue="0"/>
 
     </fragment>
 
