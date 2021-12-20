@@ -1,6 +1,9 @@
 package com.example.remind.presentation
 
 import android.content.Intent
+import android.media.Ringtone
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -19,9 +22,15 @@ class RemindNotificationActivity: AppCompatActivity() {
 
     private var alarmID: Int = 0
 
+    private lateinit var ringToneManager: RingtoneManager
+    private var ringTone: Ringtone? = null
+    private var playRingToneUrl: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.remind_notification_activity)
+
+        ringToneManager = RingtoneManager(this)
 
         intent.extras?.let {
             alarmID = it.getInt(Constant.KEY_REMIND_ALARM_ID)
@@ -31,6 +40,8 @@ class RemindNotificationActivity: AppCompatActivity() {
         binding.lifecycleOwner = this
 
         viewModel.getRemindInfo(alarmID) { entity ->
+            playRingToneUrl = entity.remindRingToneUrl
+            playRingTone()
             binding.entity = entity
         }
 
@@ -47,10 +58,37 @@ class RemindNotificationActivity: AppCompatActivity() {
             viewModel.updateRemindInfo(entity)
         }
 
+        releaseRingTone()
+
         startActivity(Intent(this@RemindNotificationActivity, MainActivity::class.java).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         })
         finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        releaseRingTone()
+    }
+
+    private fun releaseRingTone(){
+        ringTone?.let{
+            if(it.isPlaying){
+                it.stop()
+            }
+        }
+        ringTone = null
+    }
+
+    private fun playRingTone(){
+        releaseRingTone()
+        try {
+            val position = ringToneManager.getRingtonePosition(Uri.parse(playRingToneUrl))
+            ringTone = ringToneManager.getRingtone(position)
+            ringTone?.play()
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
     }
 
 }

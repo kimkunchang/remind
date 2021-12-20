@@ -19,20 +19,21 @@ data class RemindInfoEntity(
     var remindName: String,
     var remindTimeHour: Int,
     var remindTimeMinute: Int,
+    var remindRingToneUrl: String,
     var alarmOnOffStatus: Boolean
 ) {
 
     val displayTime: String
         get() {
             val amPm = if(remindTimeHour < 12) "AM" else "PM"
-            val displayHour = if(remindTimeHour <12) String.format("%02d", remindTimeHour) else String.format("%02d", remindTimeHour - 12)
+            val displayHour = if(remindTimeHour < 13) String.format("%02d", remindTimeHour) else String.format("%02d", remindTimeHour - 12)
             val displayMinute = String.format("%02d", remindTimeMinute)
             return "$displayHour:$displayMinute $amPm"
         }
 
     val displayShorTime: String
         get() {
-            val displayHour = if(remindTimeHour <12) String.format("%02d", remindTimeHour) else String.format("%02d", remindTimeHour - 12)
+            val displayHour = if(remindTimeHour < 13) String.format("%02d", remindTimeHour) else String.format("%02d", remindTimeHour - 12)
             val displayMinute = String.format("%02d", remindTimeMinute)
             return "$displayHour:$displayMinute"
         }
@@ -42,9 +43,6 @@ data class RemindInfoEntity(
 
         val intent = Intent(context, RemindAlarmReceiver::class.java)
         intent.putExtra(Constant.KEY_REMIND_ALARM_ID, alarmID)
-//        intent.putExtra(Constant.KEY_REMIND_NAME, remindName)
-//        intent.putExtra(Constant.KEY_REMIND_TIME_HOUR, remindTimeHour)
-//        intent.putExtra(Constant.KEY_REMIND_TIME_MINUTE, remindTimeMinute)
 
         Log.w("KKC_TAG", "registerAlarm -> alarmID : $alarmID")
         val pendingIntent = PendingIntent.getBroadcast(context, alarmID, intent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -53,8 +51,6 @@ data class RemindInfoEntity(
         calendar.set(Calendar.HOUR_OF_DAY, remindTimeHour)
         calendar.set(Calendar.MINUTE, remindTimeMinute)
         calendar.set(Calendar.SECOND, 0)
-
-        //alarmManager.setAlarmClock(AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent), pendingIntent)
 
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
 

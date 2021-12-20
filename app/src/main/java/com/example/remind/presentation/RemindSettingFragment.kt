@@ -1,12 +1,17 @@
 package com.example.remind.presentation
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -25,10 +30,15 @@ class RemindSettingFragment: Fragment() {
     private val viewModel: MainViewModel by viewModels()
     private var alarmID = 0
     private val sageArgs: RemindSettingFragmentArgs by navArgs()
+    private lateinit var currentRingtoneUri: Uri
+    private lateinit var currentRingtonePath: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         alarmID = sageArgs.remindAlarmId
+        currentRingtoneUri = RingtoneManager.getActualDefaultRingtoneUri(activity, RingtoneManager.TYPE_ALARM)
+        currentRingtonePath = currentRingtoneUri.toString()
+        Log.w("KKC_TAG", "onCreate -> currentRingtonePath : $currentRingtonePath")
     }
 
     override fun onCreateView(
@@ -44,6 +54,8 @@ class RemindSettingFragment: Fragment() {
 
         if(alarmID != 0) {
             viewModel.getRemindInfo(alarmID) { entity ->
+                currentRingtoneUri = Uri.parse(entity.remindRingToneUrl)
+                currentRingtonePath = entity.remindRingToneUrl
                 binding.entity = entity
             }
         }
@@ -54,7 +66,9 @@ class RemindSettingFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvRingtoneTitle.text = getCurrentRingtoneTitle()
+        binding.tvRingtoneTitle.text = getCurrentRingtoneTitle(currentRingtoneUri)
+
+        binding.layoutRemindRingtoneSetting.setOnClickListener { showRingToneDialog() }
 
         binding.btnRemindSave.setOnClickListener { saveRemind() }
     }
@@ -75,6 +89,7 @@ class RemindSettingFragment: Fragment() {
                     remindName = binding.etRemindName.text.toString(),
                     remindTimeHour = binding.tpAlarmTime.hour,
                     remindTimeMinute = binding.tpAlarmTime.minute,
+                    remindRingToneUrl = currentRingtonePath,
                     alarmOnOffStatus = true
                 )
                 viewModel.updateRemindInfo(entity)
@@ -87,6 +102,7 @@ class RemindSettingFragment: Fragment() {
                     remindName = binding.etRemindName.text.toString(),
                     remindTimeHour = binding.tpAlarmTime.hour,
                     remindTimeMinute = binding.tpAlarmTime.minute,
+                    remindRingToneUrl = currentRingtonePath,
                     alarmOnOffStatus = true
                 )
 
@@ -112,10 +128,34 @@ class RemindSettingFragment: Fragment() {
         }
     }
 
+    private var requestRingToneDialog: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()){
+        if(it.resultCode == RESULT_OK){
+            val pickUri: Uri? = it.data?.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
+            pickUri?.let { pick ->
+                Log.w("KKC_TAG", "pickUri : $pick")
+                currentRingtoneUri = pick
+                currentRingtonePath = currentRingtoneUri.toString()
+                Log.w("KKC_TAG", "pickUri -> currentRingtonePath : $currentRingtonePath")
 
-    private fun getCurrentRingtoneTitle(): String{
-        val defaultRingtoneUri = RingtoneManager.getActualDefaultRingtoneUri(activity, RingtoneManager.TYPE_ALARM)
-        val encodedQuery = defaultRingtoneUri.encodedQuery
+                binding.tvRingtoneTitle.text = getCurrentRingtoneTitle(pick)
+            }
+        }
+    }
+
+    private fun showRingToneDialog(){
+        val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "벨소리")
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, false)
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE,RingtoneManager.TYPE_ALARM)
+
+        requestRingToneDialog.launch(intent)
+    }
+
+    private fun getCurrentRingtoneTitle(ringToneUri: Uri): String{
+        //val defaultRingtoneUri = RingtoneManager.getActualDefaultRingtoneUri(activity, RingtoneManager.TYPE_ALARM)
+        val encodedQuery = ringToneUri.encodedQuery
         var title = ""
         encodedQuery?.let {
             var startIndex = it.indexOf("=")
