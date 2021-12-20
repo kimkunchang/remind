@@ -58,6 +58,14 @@ class RemindSettingFragment: Fragment() {
                 currentRingtonePath = entity.remindRingToneUrl
                 binding.entity = entity
             }
+        } else {
+            binding.entity = RemindInfoEntity(
+                remindName = "",
+                remindTimeHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
+                remindTimeMinute = Calendar.getInstance().get(Calendar.MINUTE),
+                remindRingToneUrl = currentRingtonePath,
+                alarmOnOffStatus = true
+            )
         }
 
         return binding.root
@@ -154,7 +162,6 @@ class RemindSettingFragment: Fragment() {
     }
 
     private fun getCurrentRingtoneTitle(ringToneUri: Uri): String{
-        //val defaultRingtoneUri = RingtoneManager.getActualDefaultRingtoneUri(activity, RingtoneManager.TYPE_ALARM)
         val encodedQuery = ringToneUri.encodedQuery
         var title = ""
         encodedQuery?.let {
